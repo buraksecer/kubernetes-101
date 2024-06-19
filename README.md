@@ -16,6 +16,9 @@
     * [Kubeadm](#kubeadm)
     * [Karar Verme](#karar-verme)
 * [Kurulum](#kurulum)
+* [Ek Bilgiler](#ek-bilgiler)
+   * [GitOps](#gitops)
+
 
 ## Nedir?
 
@@ -246,3 +249,35 @@ Minikube'u duraklatmak, durdurmak veya tamamen silmek için aşağıdaki komutla
 
 Bu adımlarla, Minikube üzerinde bir Kubernetes kümesini başarıyla kurabilir ve yönetebilirsiniz. Bu ortam, Kubernetes özelliklerini öğrenmek ve geliştirme testleri yapmak için idealdir.
 
+## Ek Bilgiler
+
+### GitOps
+
+**GitOps**, yazılım geliştirme ve operasyon süreçlerini yönetmek için Git sürüm kontrol sistemini temel alan bir metodolojidir. GitOps, altyapının ve uygulama yapılandırmalarının kod olarak yönetilmesi (Infrastructure as Code) fikrini genişleterek, Git reposunu tek kaynak (single source of truth) olarak kullanır. Bu yaklaşım, otomasyon, yorumlanabilirlik ve kolaboratif çalışmayı teşvik eder.
+
+### GitOps'un Temel Özellikleri
+
+1. **Değişikliklerin Git Üzerinden Yönetilmesi**: Tüm altyapı ve uygulama yapılandırmaları bir Git reposunda tutulur. Değişiklik yapmak istediğinizde, Git üzerinden pull request (PR) açılır, inceleme ve onay sürecinden geçer, ve merge edilir. Bu süreç, değişikliklerin izlenebilir ve denetlenebilir olmasını sağlar.
+
+2. **Otomasyon**: GitOps, sürekli entegrasyon (CI) ve sürekli dağıtım (CD) araçları ile entegre çalışır. Yapılandırma değişiklikleri Git'e push edildiğinde, otomatik olarak üretim ortamına veya hedef ortama uygulanır. Bu, manuel müdahaleyi azaltır ve hızlı geri dönüşler sağlar.
+
+3. **Eşzamanlılık ve Senkronizasyon**: GitOps araçları, altyapının sürekli olarak Git reposundaki durumla eşzamanlı olmasını sağlar. Eğer canlı sistemde manuel bir değişiklik yapılırsa, bu değişiklikler ya geri alınır ya da uygun şekilde repo'ya yansıtılır.
+
+4. **Güvenlik ve Uyumluluk**: Değişikliklerin merkezi bir yerden yönetilmesi ve tüm değişikliklerin izlenebilir olması, güvenlik ve uyumluluk gereksinimleri için büyük avantajlar sağlar. Ayrıca, kritik yapılandırma değişikliklerinin kod inceleme süreçlerinden geçmesi güvenliği artırır.
+
+### GitOps Araçları
+
+GitOps uygulamalarında kullanılan popüler araçlar şunları içerir:
+
+- **Argo CD**: Kubernetes için tasarlanmış bir GitOps sürekli dağıtım aracıdır. Git reposundaki yapılandırmaları otomatik olarak Kubernetes kümelerine uygular.
+- **Flux**: Kubernetes kaynaklarının otomatik hale getirilmesi ve yönetilmesi için kullanılan bir araçtır. Git reposundaki değişiklikleri takip eder ve gerekli güncellemeleri otomatik olarak uygular.
+- **Jenkins X**: Kubernetes için özel olarak geliştirilmiş, GitOps ve sürekli dağıtımı destekleyen bir CI/CD çözümüdür.
+
+### GitOps'un Avantajları
+
+- **Hız ve Verimlilik**: Yapılandırma değişikliklerinin hızlı ve tutarlı bir şekilde uygulanması, geliştirme süreçlerini hızlandırır.
+- **Daha Az Hata**: Otomasyon, insan kaynaklı hataları azaltır.
+- **Kolay Geri Alma**: Git, tüm geçmişi sakladığı için yapılandırmalarda bir sorun oluştuğunda eski sürümlere hızla geri dönülebilir.
+- **Geliştirilmiş Güvenlik ve Uyumluluk**: Her değişiklik kaydedilir ve denetlenebilir, bu da güvenlik ve regülasyonlara uyumu kolaylaştırır.
+
+GitOps, modern yazılım geliştirme pratikleri arasında önemli bir yer tutar ve altyapı yönetimini daha güvenli, verimli ve şeffaf hale getirir.
