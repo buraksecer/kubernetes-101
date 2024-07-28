@@ -25,10 +25,9 @@
     * [kube-scheduler](#kube-scheduler)
     * [storage-provisioner](#storage-provisioner)
     * [vpnkit-controller](#vpnkit-controller)
-    * [Bu Temel Servisleri Yönetmem Gerekir Mi?](#bu-temel-servisleri-yonetmem-gerekir-mi)
-    * [Kubernetes Sistem Bileşenlerinin Yönetimi](#kubernates-sistem-bilesenlerinin-yonetimi)
-    * [Kubernetes Sistem Bileşenlerinin Yönetimi](#kubernates-sistem-bilesenlerinin-yonetimi)
-    * [Ne Zaman İletişime Geçilir?](#ne-zaman-iletisime-gecilir)
+    * [Bu Temel Servisleri Yönetmem Gerekir Mi?](#bu-temel-servisleri-yönetmem-gerekir-mi)
+    * [Kubernetes Sistem Bileşenlerinin Yönetimi](#kubernetes-sistem-bileşenlerinin-yönetimi)
+    * [Ne Zaman İletişime Geçilir?](#ne-zaman-etkileşime-geçilir)
 * [Ek Bilgiler](#ek-bilgiler)
    * [GitOps](#gitops)
 
