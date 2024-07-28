@@ -16,6 +16,19 @@
     * [Kubeadm](#kubeadm)
     * [Karar Verme](#karar-verme)
 * [Kurulum](#kurulum)
+* [Kubernates Temel Bileşemler](#kubernates-temel-bilesenler)
+    * [coredns](#coredns)
+    * [etcd](#etcd)
+    * [kube-apiserver](#kube-apiserver)
+    * [kube-controller-manager](#kube-controller-manager)
+    * [kube-proxy](#kube-proxy)
+    * [kube-scheduler](#kube-scheduler)
+    * [storage-provisioner](#storage-provisioner)
+    * [vpnkit-controller](#vpnkit-controller)
+    * [Bu Temel Servisleri Yönetmem Gerekir Mi?](#bu-temel-servisleri-yonetmem-gerekir-mi)
+    * [Kubernetes Sistem Bileşenlerinin Yönetimi](#kubernates-sistem-bilesenlerinin-yonetimi)
+    * [Kubernetes Sistem Bileşenlerinin Yönetimi](#kubernates-sistem-bilesenlerinin-yonetimi)
+    * [Ne Zaman İletişime Geçilir?](#ne-zaman-iletisime-gecilir)
 * [Ek Bilgiler](#ek-bilgiler)
    * [GitOps](#gitops)
 
@@ -248,6 +261,67 @@ Minikube'u duraklatmak, durdurmak veya tamamen silmek için aşağıdaki komutla
   ```
 
 Bu adımlarla, Minikube üzerinde bir Kubernetes kümesini başarıyla kurabilir ve yönetebilirsiniz. Bu ortam, Kubernetes özelliklerini öğrenmek ve geliştirme testleri yapmak için idealdir.
+
+## Kubernates Temel Bileşenler
+
+| Namespace    | Pod Name                                    | Ready | Status  | Restarts | Age |
+|--------------|---------------------------------------------|-------|---------|----------|-----|
+| kube-system  | coredns-76f75df574-xkvlz                     | 1/1   | Running | 0        | 24s |
+| kube-system  | coredns-76f75df574-xn469                     | 1/1   | Running | 0        | 24s |
+| kube-system  | etcd-docker-desktop                          | 1/1   | Running | 0        | 24s |
+| kube-system  | kube-apiserver-docker-desktop                | 1/1   | Running | 0        | 21s |
+| kube-system  | kube-controller-manager-docker-desktop       | 1/1   | Running | 0        | 28s |
+| kube-system  | kube-proxy-5kfwn                             | 1/1   | Running | 0        | 24s |
+| kube-system  | kube-scheduler-docker-desktop                | 1/1   | Running | 0        | 29s |
+| kube-system  | storage-provisioner                          | 1/1   | Running | 0        | 22s |
+| kube-system  | vpnkit-controller                            | 1/1   | Running | 0        | 22s |
+
+
+### coredns
+Kubernetes kümesindeki tüm isim çözümleme (DNS) isteklerini yöneten bir servistir. CoreDNS, servis adlarından IP adreslerine çözümleme yapar, bu da pod’lar arasındaki iletişimin ve servislerin bulunabilirliğinin sağlanmasında kritik bir role sahiptir. Çoğu kümede yüksek kullanılabilirlik için birden fazla CoreDNS kopyası çalışır.
+
+### etcd
+Dağıtık bir anahtar-değer veritabanıdır. Kubernetes’in tüm yapılandırma verilerini ve durumunu saklar. Kubernetes’in “beyni” olarak düşünülebilir. Küme üzerinde yapılan her türlü değişiklik etcd’de saklanır.
+
+### kube-apiserver
+Kubernetes API’sinin merkezi bileşenidir. Tüm Kubernetes komutları ve işlemleri, bu API sunucusu üzerinden gerçekleştirilir. Güvenlik, erişim kontrolü ve veri doğrulama gibi işlemleri yönetir.
+
+### kube-controller-manager
+Kubernetes’in çeşitli kontrol döngülerini (controller loops) çalıştıran bileşendir. Bu kontrol döngüleri, sistem durumunu sürekli olarak istenen durumla karşılaştırır ve gerekli düzeltmeleri yapar. Örneğin, çalışması gereken pod sayısı ile gerçekte çalışan pod sayısını karşılaştırır ve fark varsa yeni pod’lar başlatır.
+
+### kube-proxy
+Her Kubernetes node’unda çalışır ve pod’ların dış dünya ile iletişim kurabilmesi için ağ yönlendirmelerini sağlar. Ayrıca, içerideki servisler arası iletişimi de yönetir ve yük dengelendirme işlemlerini gerçekleştirir.
+
+### kube-scheduler
+Kubernetes’de yeni oluşturulan pod’ların hangi node’lara yerleştirileceğine karar veren bileşendir. Pod’ların gereksinimlerini, kaynak kullanılabilirliğini ve diğer kısıtları dikkate alarak en uygun node’u seçer.
+
+### Storage Provisioner
+Dinamik olarak depolama alanı sağlamakla görevlidir. Örneğin, bir PersistentVolumeClaim (PVC) yapıldığında, bu bileşen otomatik olarak bir PersistentVolume (PV) oluşturur ve bu talebi karşılar.
+
+### Vpnkit Controller
+Özellikle Docker Desktop’ın macOS ve Windows sürümlerinde, konteynerlerin ve Kubernetes pod’larının ana makine ile güvenli bir şekilde iletişim kurmasını sağlayan bir ağ köprüsüdür.
+
+### Bu Temel Servisleri Yönetmem Gerekir Mi?
+Listelenen Kubernetes sistem bileşenleri ve servisleri, Kubernetes kümesinin temel işlevselliğini sağlamak için otomatik olarak yönetilir ve çalıştırılır. Bu bileşenler, kümenin sağlıklı ve işlevsel kalmasını sağlamak için gereklidir. Ancak, günlük uygulama geliştirme ve yönetimi sırasında, bir kullanıcı olarak bu bileşenlerle doğrudan etkileşimde bulunmanız genellikle gerekmez. İşte bazı detaylar:
+
+### Kubernetes Sistem Bileşenlerinin Yönetimi
+
+1. **Otomatik Yönetim**: Kubernetes, `kube-apiserver`, `kube-scheduler`, `kube-controller-manager` gibi çekirdek bileşenleri otomatik olarak yönetir. Bu sistem bileşenleri, pod'ların planlanması, sağlık durumunun izlenmesi ve ağ politikalarının uygulanması gibi görevleri yerine getirir.
+
+2. **Kullanıcı Etkileşimi**: Geliştiriciler ve sistem yöneticileri genellikle uygulama seviyesindeki kaynaklarla (örneğin, Deployment'lar, Service'ler, ConfigMaps) etkileşimde bulunurlar. `kubectl` ve diğer API çağrıları aracılığıyla bu kaynaklar üzerinde işlemler gerçekleştirilir.
+
+3. **CoreDNS**: Kubernetes içindeki DNS çözünürlüğünü yönetir. Uygulama bileşenleriniz arasında isimle erişim gerektiğinde bu servis devreye girer, fakat günlük kullanımda bu servisin yönetimiyle ilgilenmeniz gerekmez.
+
+4. **Etcd**: Kubernetes'in dağıtılmış veritabanıdır ve tüm küme verilerini saklar. Etcd'nin yedeğini almak ve izlemek gibi bazı ileri düzey operasyonlar dışında, etcd ile doğrudan etkileşimde bulunmanız genellikle gerekmez.
+
+5. **Kube-proxy ve Networking**: Kube-proxy, Kubernetes ağ kurallarını işler ve containerlar arası ağ iletişimini sağlar. Ağ politikaları ve güvenlik grupları gibi konfigürasyonlarla ilgilenirken bu bileşenin varlığını bilmek önemlidir.
+
+### Ne Zaman Etkileşime Geçilir?
+
+- **Sorun Giderme ve Optimizasyon**: Eğer kümenizde performans sorunları veya hatalar meydana gelirse, bu sistem bileşenlerinin loglarına ve metriklerine bakmanız gerekebilir. Örneğin, yavaş yanıtlar veya planlama hataları için `kube-scheduler`'ın logları incelenebilir.
+- **Güvenlik ve Yapılandırma Değişiklikleri**: Küme güvenliğini artırmak veya yapılandırmaları değiştirmek gibi ileri düzey değişiklikler yaparken, bu sistem bileşenlerinin konfigürasyonlarına müdahale etmeniz gerekebilir.
+
+Genel olarak, Kubernetes'in sistem bileşenleri küme yönetimi tarafından otomatik olarak kontrol edilir ve bu, kullanıcıların bu bileşenlerle doğrudan etkileşimde bulunmasını azaltır. Ancak, ileri düzey küme yönetimi, performans optimizasyonu ve sorun giderme durumlarında bu bileşenlerin nasıl çalıştığını anlamak önemlidir.
 
 ## Ek Bilgiler
 
